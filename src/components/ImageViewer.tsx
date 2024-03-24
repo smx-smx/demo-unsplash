@@ -36,9 +36,14 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
     );
   };
 
-  useEffect(() => {
+  const createApi = () => {
     const api = api_create();
     setApi(api);
+  };
+
+  /** run on startup */
+  useEffect(() => {
+    createApi();
   }, []);
 
   /** run when API becomes available */
@@ -155,6 +160,7 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
             <Button
               onClick={() => {
                 api_setToken(apiToken);
+                createApi();
               }}
             >
               Set

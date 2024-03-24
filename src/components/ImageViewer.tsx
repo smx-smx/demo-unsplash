@@ -57,10 +57,13 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
     }
   }, [api]);
 
-  /** run when the page number changes */
+  /**
+   * run when the page number changes,
+   * or the query changes
+   **/
   useEffect(() => {
     fetchImages();
-  }, [pageNumber]);
+  }, [pageNumber, query]);
 
   const getRandomKeyword = () => {
     const keywords = [
@@ -82,10 +85,9 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
   const randomSearch = () => {
     const randomQuery = getRandomKeyword();
     setQuery(randomQuery);
-    fetchImages(randomQuery);
   };
 
-  const fetchImagesInternal = async (queryInput: string | null = null) => {
+  const fetchImagesInternal = async () => {
     if (!isApiAvailable()) {
       return;
     }
@@ -93,11 +95,9 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
 
     setLoading(true);
 
-    const queryToUse = queryInput !== null ? queryInput : query;
-
     if (mode === "main") {
       const resp = await theApi.search.getPhotos({
-        query: queryToUse,
+        query: query,
         page: pageNumber,
         perPage: 25,
       });
@@ -120,10 +120,10 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
     setLoading(false);
   };
 
-  const fetchImages = async (queryInput: string | null = null) => {
+  const fetchImages = async () => {
     try {
       setError(null);
-      await fetchImagesInternal(queryInput);
+      await fetchImagesInternal();
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -192,7 +192,6 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
                   randomSearch();
                 } else {
                   setQuery(query);
-                  fetchImages(query);
                 }
               }}
             />

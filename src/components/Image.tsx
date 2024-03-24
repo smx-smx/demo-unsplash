@@ -25,8 +25,8 @@ function Image({ data }: ImageProps) {
       imgAlt={data.alt_description ?? ''}
       imgSrc={data.urls.regular}
     >
-      <div className='relative'>
-        <div className='absolute right-0 top-0' style={{
+      <div className='relative w-full'>
+        <div className='absolute right-0 top-0 size-auto' style={{
           marginTop: '-20px',
           marginRight: '-20px'
         }}>

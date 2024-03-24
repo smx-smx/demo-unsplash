@@ -4,9 +4,9 @@ import { createApi } from 'unsplash-js';
 import * as PhotoApi from 'unsplash-js/dist/methods/photos/types';
 import SearchBar from "../components/SearchBar";
 import ImageList from "../components/ImageList";
-import { Kbd, Spinner } from "flowbite-react";
+import { Button, Kbd, Label, Spinner, TextInput } from "flowbite-react";
 import AppNavbar from "../components/AppNavbar";
-import { createUnsplashApi } from "../api";
+import { api_create, api_setToken } from "../api";
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardArrowUp } from "react-icons/md";
 
 const IndexPage: React.FC<PageProps> = () => {
@@ -15,8 +15,14 @@ const IndexPage: React.FC<PageProps> = () => {
   const [images, setImages] = useState<PhotoApi.Basic[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<string|null>(null);
+  const [hasApi, setHasApi] = useState<boolean>(true);
+  const [apiToken, setApiToken] = useState<string>('');
 
-  const api = createUnsplashApi();
+  let api = api_create();
+  if(api === null){
+    setHasApi(false);
+  }
+
   const getRandomKeyword = () => {
     const keywords = [
       'Nature', 'Landscape', 'Animals', 'City', 'Food',
@@ -33,6 +39,11 @@ const IndexPage: React.FC<PageProps> = () => {
   };
 
   const fetchImagesInternal = async (query: string) => {
+    if(api === null) {
+      setHasApi(false);
+      return;
+    }
+
     setLoading(true);
     const resp = await api.search.getPhotos({
       query: query,
@@ -75,6 +86,24 @@ const IndexPage: React.FC<PageProps> = () => {
     if(handled){
       await fetchImages(query);
     }
+  }
+
+  if(!hasApi){
+    return <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
+      <div className="flex flex-col">
+        <div>
+          <Label>Enter api Token</Label>
+        </div>
+        <div className="flex flex-row gap-1">
+          <TextInput onChange={e => setApiToken(e.target.value)}></TextInput>
+          <Button onClick={() => {
+            api_setToken(apiToken);
+            api = api_create();
+            setHasApi(true);
+          }}>Set</Button>
+        </div>
+      </div>
+    </main>;
   }
 
   return (

@@ -54,7 +54,7 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
   /** run when API becomes available */
   useEffect(() => {
     if (isApiAvailable()) {
-      if (mode === "main" && query === null) {
+      if (mode === "main" && query.length < 1) {
         randomSearch();
       } else {
         fetchImages();

@@ -59,20 +59,21 @@ function Image({ data, fullPage }: ImageProps) {
               />
             </Rating>
           </div>
-          <p className="max-h-80 overflow-y-auto font-normal text-gray-700 dark:text-gray-400">
-            {data.description}
-          </p>
-
           {fullPage && (
             <div>
-              <Kbd
-                className="cursor-default"
-                icon={getIcon()}
-                onClick={() => toggleComments()}
-              >
-                &nbsp; Comments
-              </Kbd>
-              {commentsExpanded && <ImageComments id={data.id} />}
+              <p className="max-h-80 overflow-y-auto font-normal text-gray-700 dark:text-gray-400">
+                {data.description}
+              </p>
+              <div>
+                <Kbd
+                  className="cursor-default"
+                  icon={getIcon()}
+                  onClick={() => toggleComments()}
+                >
+                  &nbsp; Comments
+                </Kbd>
+                {commentsExpanded && <ImageComments id={data.id} />}
+              </div>
             </div>
           )}
         </div>

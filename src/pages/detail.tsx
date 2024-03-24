@@ -37,9 +37,11 @@ const ImageDetailPage: React.FC<PageProps> = (props) => {
   if (api === null || api === undefined) return <></>;
   if (detail === undefined) return <></>;
   return (
-    <div className="m-auto flex w-2/6 flex-col">
-      <Image data={detail} fullPage={true} />
-    </div>
+    <main className="m-2 flex h-screen items-center justify-center">
+      <div className="h-full">
+        <Image data={detail} fullPage={true} />
+      </div>
+    </main>
   );
 };
 

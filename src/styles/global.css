@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 .masonry-with-columns {
   column-width: max(20vh, 10vw);
   column-count: auto;
@@ -16,4 +22,10 @@
 
 .card_mini img {
   cursor: pointer;
+}
+
+img {
+  max-height: calc(100vh - 150px);
+  width: auto;
+  object-fit: contain;
 }

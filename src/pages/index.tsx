@@ -4,14 +4,17 @@ import { createApi } from 'unsplash-js';
 import * as PhotoApi from 'unsplash-js/dist/methods/photos/types';
 import SearchBar from "../components/SearchBar";
 import ImageList from "../components/ImageList";
-import { Spinner } from "flowbite-react";
+import { Kbd, Spinner } from "flowbite-react";
 import AppNavbar from "../components/AppNavbar";
 import { createUnsplashApi } from "../api";
+import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardArrowUp } from "react-icons/md";
 
 const IndexPage: React.FC<PageProps> = () => {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [images, setImages] = useState<PhotoApi.Basic[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [error, setError] = useState<string|null>(null);
 
   const api = createUnsplashApi();
   const getRandomKeyword = () => {
@@ -29,22 +32,53 @@ const IndexPage: React.FC<PageProps> = () => {
     fetchImages(randomQuery);
   };
 
-  const fetchImages = async (query: string) => {
+  const fetchImagesInternal = async (query: string) => {
     setLoading(true);
     const resp = await api.search.getPhotos({
       query: query,
+      page: pageNumber,
       perPage: 25
     });
+
     setImages(resp.response?.results ?? []);
     setLoading(false);
+  }
+
+  const fetchImages = async (query: string) => {
+    try {
+      setError(null);
+      await fetchImagesInternal(query);
+    } catch(error){
+      setLoading(false);
+      console.error(error);
+      setError('An error occurred, please try again later');
+    }
   };
 
   useEffect(() => {
     randomSearch();
   }, []);
 
+  const paginationOp = async (op:string) => {
+    let handled = true;
+    switch(op){
+      case '+':
+        setPageNumber(pageNumber + 1);
+        break;
+      case '-':
+          if(pageNumber > 1) setPageNumber(pageNumber - 1);
+          break;
+      default:
+        handled = false;
+        break;
+    }
+    if(handled){
+      await fetchImages(query);
+    }
+  }
+
   return (
-    <main className="dark:bg-gray-800">
+    <main className="m-4 dark:bg-gray-800">
       <AppNavbar />
       <div>
         <div className="m-3 flex flex-row justify-center">
@@ -60,7 +94,19 @@ const IndexPage: React.FC<PageProps> = () => {
           {loading && <Spinner size={"xl"} />}
         </div>
 
-        <ImageList images={images} />
+        <div>
+          <div className="mr-0 flex w-full flex-wrap place-content-end gap-1 justify-self-end">
+            <span>Page {pageNumber}</span>
+          </div>
+          <div className="mr-0 flex w-full flex-wrap place-content-end gap-1 justify-self-end">
+            <Kbd onClick={() => paginationOp('-')} icon={MdKeyboardArrowLeft} />
+            <Kbd onClick={() => paginationOp('+')} icon={MdKeyboardArrowRight} />
+          </div>
+          {error && <div className="w-full text-center">
+            <span className="text-2xl text-red-500">{error}</span>
+            </div>}
+          <ImageList images={images} />
+        </div>
       </div>
     </main>
   );

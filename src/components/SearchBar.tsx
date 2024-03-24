@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'flowbite-react';
+import { Button, TextInput } from 'flowbite-react';
 
 interface Props {
   initialQuery: string;
@@ -27,7 +27,7 @@ function SearchBar({ initialQuery, onSearch }: Props): JSX.Element {
 
   return (
     <div className='m-3 flex flex-row gap-2'>
-      <input
+      <TextInput
         type="text"
         placeholder='Search for pictures...'
         value={getQuery()}

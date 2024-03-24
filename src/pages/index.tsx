@@ -21,7 +21,7 @@ const IndexPage: React.FC<PageProps> = () => {
   };
 
   return (
-    <main className="flex min-h-screen justify-center gap-2 dark:bg-gray-800">
+    <main className="dark:bg-gray-800">
       <div>
         <SearchBar onSearch={fetchImages} />
         <ImageList images={images} />

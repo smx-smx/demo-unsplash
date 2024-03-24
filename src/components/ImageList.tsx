@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PhotoApi from 'unsplash-js/dist/methods/photos/types';
+import Image from './Image';
 
 interface ImageListProps {
 	images: PhotoApi.Basic[];
@@ -7,11 +8,9 @@ interface ImageListProps {
 
 function ImageList({ images }: ImageListProps) {
   return (
-    <div>
+    <div className='flex flex-wrap items-start gap-3'>
       {images.map((image) => (
-        <div key={image.id}>
-          <img src={image.urls.thumb} alt={image.alt_description ?? ''} />
-        </div>
+		<Image key={image.id} data={image} />
       ))}
     </div>
   );

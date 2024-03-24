@@ -6,16 +6,14 @@ import SearchBar from "../components/SearchBar";
 import ImageList from "../components/ImageList";
 import { Spinner } from "flowbite-react";
 import AppNavbar from "../components/AppNavbar";
+import { createUnsplashApi } from "../api";
 
 const IndexPage: React.FC<PageProps> = () => {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [images, setImages] = useState<PhotoApi.Basic[]>([]);
 
-  const api = createApi({
-    accessKey: window.localStorage.getItem('unsplash.apikey') ?? ''
-  });
-
+  const api = createUnsplashApi();
   const getRandomKeyword = () => {
     const keywords = [
       'Nature', 'Landscape', 'Animals', 'City', 'Food',

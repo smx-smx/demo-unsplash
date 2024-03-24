@@ -6,6 +6,7 @@ import { Button, Kbd, Label, Spinner, TextInput } from "flowbite-react";
 import AppNavbar from "../components/AppNavbar";
 import { ApiObject, api_create, api_setToken } from "../api";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { getLastQuery, saveLastQuery } from "../store";
 
 interface ImageViewerProps {
   mode: "main" | "favourites";
@@ -43,19 +44,28 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
 
   /** run on startup */
   useEffect(() => {
+    const lastQuery = getLastQuery();
+    if (lastQuery !== null) {
+      setQuery(lastQuery);
+    }
     createApi();
   }, []);
 
   /** run when API becomes available */
   useEffect(() => {
     if (isApiAvailable()) {
-      if (mode === "main") {
+      if (mode === "main" && query === null) {
         randomSearch();
       } else {
         fetchImages();
       }
     }
   }, [api]);
+
+  /** save last query */
+  useEffect(() => {
+    saveLastQuery(query);
+  }, [query]);
 
   /**
    * run when the page number changes,

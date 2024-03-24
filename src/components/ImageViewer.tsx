@@ -57,6 +57,11 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
     }
   }, [api]);
 
+  /** run when the page number changes */
+  useEffect(() => {
+    fetchImages();
+  }, [pageNumber]);
+
   const getRandomKeyword = () => {
     const keywords = [
       "Nature",
@@ -128,21 +133,24 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
 
   const paginationOp = async (op: string) => {
     let handled = true;
+    let nextPageNumber = pageNumber;
     switch (op) {
       case "+":
         if (totalPages === undefined || pageNumber < totalPages) {
-          setPageNumber(pageNumber + 1);
+          nextPageNumber = pageNumber + 1;
         }
         break;
       case "-":
-        if (pageNumber > 1) setPageNumber(pageNumber - 1);
+        if (pageNumber > 1) {
+          nextPageNumber = pageNumber - 1;
+        }
         break;
       default:
         handled = false;
         break;
     }
     if (handled) {
-      await fetchImages();
+      setPageNumber(nextPageNumber);
     }
   };
 

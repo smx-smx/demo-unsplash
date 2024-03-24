@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .masonry-with-columns {
-  column-width: max(200px, 10vw);
+  column-width: max(350px, 10vw);
   column-count: auto;
   column-gap: 1rem;
 }

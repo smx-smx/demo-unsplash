@@ -47,7 +47,7 @@ const IndexPage: React.FC<PageProps> = () => {
   return (
     <main className="dark:bg-gray-800">
       <div>
-        <div className="flex flex-row">
+        <div className="m-3 flex flex-row justify-center">
           <SearchBar initialQuery={query}
             onSearch={query => {
               if (query.length < 1) {
@@ -59,6 +59,7 @@ const IndexPage: React.FC<PageProps> = () => {
             }} />
           {loading && <Spinner size={"xl"} />}
         </div>
+
         <ImageList images={images} />
       </div>
     </main>

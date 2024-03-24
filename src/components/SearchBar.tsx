@@ -26,7 +26,7 @@ function SearchBar({ initialQuery, onSearch }: Props): JSX.Element {
   }, [initialQuery]);
 
   return (
-    <div className='flex flex-row'>
+    <div className='m-3 flex flex-row gap-2'>
       <input
         type="text"
         placeholder='Search for pictures...'

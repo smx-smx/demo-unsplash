@@ -23,7 +23,7 @@ function Image({ data }: ImageProps) {
     <Card
       className="max-w-sm"
       imgAlt={data.alt_description ?? ''}
-      imgSrc={data.urls.thumb}
+      imgSrc={data.urls.regular}
     >
       <div className='relative'>
         <div className='absolute right-0 top-0' style={{

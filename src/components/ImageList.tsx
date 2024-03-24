@@ -8,7 +8,7 @@ interface ImageListProps {
 
 function ImageList({ images }: ImageListProps) {
   return (
-    <div className='flex flex-wrap items-start gap-3'>
+    <div className="masonry-with-columns">
       {images.map((image) => (
         <Image key={image.id} data={image} />
       ))}

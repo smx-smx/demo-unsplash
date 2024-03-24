@@ -11,6 +11,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeybo
 
 interface ImageViewerProps {
   mode: 'main'|'favourites',
+  /** properties for favourites mode */
   imageIds ?: string[]
 }
 
@@ -22,6 +23,13 @@ function ImageViewer({ mode, imageIds } : ImageViewerProps){
   const [error, setError] = useState<string|null>(null);
   const [hasApi, setHasApi] = useState<boolean>(true);
   const [apiToken, setApiToken] = useState<string>('');
+  
+  // keep low due to rate limiting
+  const FAVS_PER_PAGE = 5;
+  const totalPages = imageIds !== undefined
+    ? Math.ceil(imageIds.length / FAVS_PER_PAGE)
+    : undefined;
+
 
   let api = api_create();
   if(api === null){
@@ -64,7 +72,10 @@ function ImageViewer({ mode, imageIds } : ImageViewerProps){
       });
       setImages(resp.response?.results ?? []);
     } else if(mode == 'favourites' && imageIds !== undefined){
-      const resp = await Promise.all(imageIds.map(id => {
+      const start = (pageNumber - 1) * FAVS_PER_PAGE;
+      const end = start + FAVS_PER_PAGE;
+      const items = imageIds.slice(start, end);
+      const resp = await Promise.all(items.map(id => {
         console.debug(`fetching ${id}...`);
         return api.photos.get({ photoId: id });
       }));
@@ -89,7 +100,9 @@ function ImageViewer({ mode, imageIds } : ImageViewerProps){
     let handled = true;
     switch(op){
       case '+':
-        setPageNumber(pageNumber + 1);
+        if(totalPages === undefined || pageNumber < totalPages){
+          setPageNumber(pageNumber + 1);
+        }
         break;
       case '-':
           if(pageNumber > 1) setPageNumber(pageNumber - 1);
@@ -148,7 +161,9 @@ function ImageViewer({ mode, imageIds } : ImageViewerProps){
 
         <div>
           <div className="mr-0 flex w-full flex-wrap place-content-end gap-1 justify-self-end">
-            <span>Page {pageNumber}</span>
+            <span>Page {pageNumber}
+            {(totalPages !== undefined) && <>/{totalPages} <br />(5 per page)</>}
+            </span>
           </div>
           <div className="mr-0 flex w-full flex-wrap place-content-end gap-1 justify-self-end">
             <Kbd onClick={() => paginationOp('-')} icon={MdKeyboardArrowLeft} />

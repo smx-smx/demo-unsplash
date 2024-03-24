@@ -2,8 +2,11 @@
   demo-unsplash 📸
 </h1>
 <h3 align="center">
-  <a href="https://smx-smx.github.io/demo-unsplash/">Visit the site here</a>
+  <a href="https://unsplash-demo-innovazione.netlify.app/">Visit the site (via netlify, recommended)</a> <br>
+  <a href="https://smx-smx.github.io/demo-unsplash/">Visit the site (via github pages, might have caching issues)</a>
 </h3>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/60dc1417-5341-4ccb-9227-648b818b43d6/deploy-status)](https://app.netlify.com/sites/unsplash-demo-innovazione/deploys)
 
 ## 🚀 Quick start
 

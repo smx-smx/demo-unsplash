@@ -1,42 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Rating } from 'flowbite-react';
 import * as PhotoApi from 'unsplash-js/dist/methods/photos/types';
+import { imageIsFavourite, toggleImageFavourite } from '../store';
 
 interface ImageProps {
   data: PhotoApi.Basic;
 }
 
 function Image({ data }: ImageProps) {
-  const KEY_FAVOURITES = 'unsplash.favourites';
-
-  const getFavourites = () => {
-    try {
-      return JSON.parse(window.localStorage.getItem(KEY_FAVOURITES) ?? '{}');
-    } catch(e){
-      return {};
-    }
-  }
-
-  const isImageFavourite = (id:string) => {
-    return getFavourites()[id] !== undefined;
-  }
-
   const [isFavourite, setFavourite] = useState<boolean>(false);
 
   const toggleFavourite = (id:string) => {
-    const favourites = getFavourites();
-    if(id in favourites){
-      delete favourites[id];
-      setFavourite(false);
-    } else {
-      favourites[id] = true;
-      setFavourite(true);
-    }
-    window.localStorage.setItem(KEY_FAVOURITES, JSON.stringify(favourites));
+    const newState = toggleImageFavourite(id);
+    setFavourite(newState);
   };
 
   useEffect(() => {
-    setFavourite(isImageFavourite(data.id));
+    setFavourite(imageIsFavourite(data.id));
   }, []);
 
   return <>

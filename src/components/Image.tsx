@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Kbd, Rating } from "flowbite-react";
+import { Card, Kbd, Rating } from "flowbite-react";
 import * as PhotoApi from "unsplash-js/dist/methods/photos/types";
 import { imageIsFavourite, toggleImageFavourite } from "../store";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";

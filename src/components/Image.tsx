@@ -32,9 +32,19 @@ function Image({ data, fullPage }: ImageProps) {
     setCommentsExpanded(!commentsExpanded);
   };
 
+  const getTextClasses = (fullPage: boolean) => {
+    let klasses =
+      "block h-10 min-w-1 truncate font-normal text-gray-700 dark:text-gray-400";
+    if (!fullPage) {
+      klasses += " truncate";
+    }
+    return klasses;
+  };
+
   return (
     <div className={fullPage ? "" : "card_mini"}>
       <Card
+        className="w-full"
         imgAlt={data.alt_description ?? ""}
         imgSrc={data.urls.regular}
         onClick={(e) => {
@@ -59,11 +69,16 @@ function Image({ data, fullPage }: ImageProps) {
               />
             </Rating>
           </div>
+          <div className="">
+            <p
+              style={{ width: fullPage ? "inherit" : "250px" }}
+              className={getTextClasses(fullPage)}
+            >
+              {data.description ?? data.alt_description}
+            </p>
+          </div>
           {fullPage && (
             <div>
-              <p className="max-h-80 overflow-y-auto font-normal text-gray-700 dark:text-gray-400">
-                {data.description}
-              </p>
               <div>
                 <Kbd
                   className="cursor-default"

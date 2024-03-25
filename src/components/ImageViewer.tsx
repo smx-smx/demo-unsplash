@@ -51,7 +51,7 @@ function ImageViewer({ mode, imageIds }: ImageViewerProps) {
     createApi();
   }, []);
 
-  /** run when API becomes available */
+  /** run when API state changes */
   useEffect(() => {
     if (isApiAvailable()) {
       if (mode === "main" && query.length < 1) {

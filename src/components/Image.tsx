@@ -71,7 +71,9 @@ function Image({ data, fullPage }: ImageProps) {
           </div>
           <div className="">
             <p
-              style={{ width: fullPage ? "inherit" : "250px" }}
+              style={{
+                width: fullPage ? "inherit" : "calc(min(200px, 30vw) - 30px)",
+              }}
               className={getTextClasses(fullPage)}
             >
               {data.description ?? data.alt_description}

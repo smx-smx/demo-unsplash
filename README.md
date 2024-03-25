@@ -19,7 +19,7 @@ Touch a picture to view and save comments
 
 ![screenshot](doc/comments.png)
 
-Favourites can be viewer from the user menu in the top right corner
+Favourites can be viewed from the user menu in the top right corner
 
 ![screenshot](doc/favourites.png)
 

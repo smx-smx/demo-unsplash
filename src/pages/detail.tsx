@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { imageGetFavourites } from "../store";
 import ImageViewer from "../components/ImageViewer";
 import { ApiObject, api_create } from "../api";
-import { Card } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import * as PhotoApi from "unsplash-js/dist/methods/photos/types";
 import Image from "../components/Image";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { navigate } from "gatsby";
 
 const ImageDetailPage: React.FC<PageProps> = (props) => {
   const [api, setApi] = useState<ApiObject | null | undefined>(undefined);
@@ -37,9 +39,16 @@ const ImageDetailPage: React.FC<PageProps> = (props) => {
   if (api === null || api === undefined) return <></>;
   if (detail === undefined) return <></>;
   return (
-    <main className="m-2 flex h-screen items-center justify-center">
-      <div className="h-full">
-        <Image data={detail} fullPage={true} />
+    <main className="relative m-2 flex h-screen flex-col items-center">
+      <div className="w-fit">
+        <div className="place-self-start">
+          <Button pill size="md" onClick={() => navigate(-1)}>
+            <IoArrowBackSharp />
+          </Button>
+        </div>
+        <div className="mt-2">
+          <Image data={detail} fullPage={true} />
+        </div>
       </div>
     </main>
   );

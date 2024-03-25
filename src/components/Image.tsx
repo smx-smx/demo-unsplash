@@ -63,10 +63,16 @@ function Image({ data, fullPage }: ImageProps) {
           <div className="">
             <p
               style={{
-                width: fullPage ? "inherit" : "calc(min(200px, 30vw) - 30px)",
+                maxWidth: "80vw",
+                width: fullPage
+                  ? "calc(100% - 150px)"
+                  : "calc(min(200px, 30vw) - 30px)",
                 height: fullPage ? "inherit" : "3em",
+                overflow: fullPage ? "inherit" : "hidden",
+                textOverflow: fullPage ? "inherit" : "ellipsis",
+                whiteSpace: fullPage ? "inherit" : "nowrap",
               }}
-              className="block min-w-1 truncate font-normal text-gray-700 dark:text-gray-400"
+              className="block min-w-1 font-normal text-gray-700 dark:text-gray-400"
             >
               {data.description ?? data.alt_description}
             </p>

@@ -32,15 +32,6 @@ function Image({ data, fullPage }: ImageProps) {
     setCommentsExpanded(!commentsExpanded);
   };
 
-  const getTextClasses = (fullPage: boolean) => {
-    let klasses =
-      "block h-10 min-w-1 truncate font-normal text-gray-700 dark:text-gray-400";
-    if (!fullPage) {
-      klasses += " truncate";
-    }
-    return klasses;
-  };
-
   return (
     <div className={fullPage ? "" : "card_mini"}>
       <Card
@@ -73,8 +64,9 @@ function Image({ data, fullPage }: ImageProps) {
             <p
               style={{
                 width: fullPage ? "inherit" : "calc(min(200px, 30vw) - 30px)",
+                height: fullPage ? "inherit" : "3em",
               }}
-              className={getTextClasses(fullPage)}
+              className="block min-w-1 truncate font-normal text-gray-700 dark:text-gray-400"
             >
               {data.description ?? data.alt_description}
             </p>

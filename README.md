@@ -8,6 +8,21 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/60dc1417-5341-4ccb-9227-648b818b43d6/deploy-status)](https://app.netlify.com/sites/unsplash-demo-innovazione/deploys)
 
+## Usage Instructions
+Enter the search term, and press Search
+
+Tap the little star to mark favourite pictures
+
+![screenshot](doc/main.png)
+
+Touch a picture to view and save comments
+
+![screenshot](doc/comments.png)
+
+Favourites can be viewer from the user menu in the top right corner
+
+![screenshot](doc/favourites.png)
+
 ## 🚀 Quick start
 
 1.  **Clone the repository**
